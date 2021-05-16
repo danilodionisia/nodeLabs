@@ -1,6 +1,6 @@
-### Application that checks and stores sample results.
+### Application that checks and stores sample results.  
 
-To install the application it is necessary to configure the environment with the following steps:
+To install the application it is necessary to configure the environment with the following steps:  
 
 -  Clone the repoistory.
 -  Access the nodeLabs folder.
@@ -31,7 +31,7 @@ POST - **http://localhost:3000/toxicologicals** -> to save a new record.
 PUT - **http://localhost:3000/toxicologicals/codigo_amostra** -> to change a record.
 
 For these requests it is necessary to send one in the following format:
-
+`
 {
    "codigo_amostra": "225263",
     "Cocaine": "0.5",
@@ -47,3 +47,4 @@ For these requests it is necessary to send one in the following format:
     "Cocaethylene": "0.05",
     "Norcocaina": "0.05"
 }
+`
