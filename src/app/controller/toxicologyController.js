@@ -112,16 +112,18 @@ router.put('/:codigo_amostra', async (req, res) => {
         const paramsReadyToInsert = fieldsValidation.prepareFiledsToInsert(req.body);
         
         const updatedSample = await Toxicologic.findOne({ CodigoAmostra: req.params.codigo_amostra });
-
+        
         if (!updatedSample) {
             return res.status(400).json(ERROR.NOT_FOUND);
         }
-
+        
+        paramsReadyToInsert.CodigoAmostra = req.params.codigo_amostra;
+        
         updatedSample.overwrite(paramsReadyToInsert);
         await updatedSample.save();
 
         return res.status(200).json({
-            codigo_amostra: getParamsResult.sample_code,
+            codigo_amostra: paramsReadyToInsert.CodigoAmostra,
             resultado_amostra: getParamsResult.sample_result
          });
     } catch (err) {
@@ -138,8 +140,6 @@ router.delete('/:codigo_amostra', async (req, res) => {
         if (!req.params.codigo_amostra || req.params.codigo_amostra == undefined) {
             return res.status(400).json(ERROR.ERROR_INVALID_SAMPLE_CODE);
         }
-
-
 
         const removedSample = await Toxicologic.deleteOne({ CodigoAmostra: req.params.codigo_amostra });
         
