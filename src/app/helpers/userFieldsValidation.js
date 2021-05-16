@@ -23,7 +23,6 @@ exports.validatePassword = (password) => {
 
 exports.validateName = (name) => {
     const minLength = 2;
-    const minCount = 0;
     let response = {
         isEmpty: false,
         isInvalidLength: false,

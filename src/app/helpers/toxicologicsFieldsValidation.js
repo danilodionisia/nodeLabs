@@ -19,7 +19,7 @@ exports.validateFields = (field) => {
     let response = true;
     const maxLength = 8;
     
-    if (!field || field == undefined || field.length > maxLength || !isFinite(field) || Number(field) < 0) {
+    if (!field || field == undefined || field.length > maxLength || !isFinite(field) || Number(field) < 0) {       
         response = false;
     }
     return response;
@@ -183,7 +183,7 @@ exports.prepareFiledsToInsert = (params) => {
     return fields;
 }
 
-exports.cleanResponse = (params) => {
+exports.cleanResponseSome = (params) => {
     
     const cleanResponse = [];
 
@@ -206,6 +206,29 @@ exports.cleanResponse = (params) => {
         });
     }
 
+    return cleanResponse;
+};
+
+
+
+exports.cleanResponseOnlyOne = (param) => {
+    
+    const cleanResponse = {
+        CodigoAmostra: param.CodigoAmostra,
+        Cocaina: param.Cocaina,
+        Anfetamina: param.Anfetamina,
+        Metanfetamina: param.Metanfetamina,
+        MDA: param.MDA,
+        MDMA: param.MDMA,
+        THC: param.THC,
+        Morfina: param.Morfina,
+        Codeina: param.Codeina,
+        Heroina: param.Heroina,
+        Benzoilecgonina: param.Benzoilecgonina,
+        Cocaetileno: param.Cocaetileno,
+        Norcocaina: param.Norcocaina,
+        Result: param.Result,
+    };
     return cleanResponse;
 };
 

@@ -37,3 +37,40 @@ exports.USER_NOT_FOUND = {
 exports.USER_INVALID_PASSWORD = {
     error: 'Invalid password'
 };
+
+exports.ERROR_REGISTRATION = {
+    error: 'Registration failed'
+};
+
+exports.ERROR_LOADING_TOXIC = {
+    error: 'Error loading toxicologics'
+};
+
+exports.ERROR_ALL_PARAMETERS = {
+    error: 'All parameters are needed'
+};
+
+exports.ERROR_SAMPLE_ALREADY_EXISTS = {
+    error: 'This sample already exists'
+};
+
+exports.ERROR_SAVING_SAMPLE = {
+    error: 'Error saving new sample'
+};
+
+exports.NOT_FOUND = {
+    error: 'Not found'
+};
+
+exports.ERROR_UPDATE_SAMPLE = {
+    error: 'Error updating sample'
+};
+
+exports.ERROR_INVALID_SAMPLE_CODE = {
+    error: 'Codigo_amostra invalid'
+};
+
+exports.ERROR_DELETING_SAMPLE = {
+    error: 'Error deleting sample'
+};
+
