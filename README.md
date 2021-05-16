@@ -33,18 +33,18 @@ PUT - **http://localhost:3000/toxicologicals/codigo_amostra** -> to change a rec
 For these requests it is necessary to send one in the following format:    
 
 {  
-   "codigo_amostra": "225263",  
-    "Cocaine": "0.5",  
-    "Amphetamine": "0.19",  
-    "Methamphetamine": "0.19",  
-    "MDA": "0.29",  
-    "MDMA": "0.19",  
-    "THC": "0.049",  
-    "Morphine": "0.19",  
-    "Codeina": "0.19",  
-    "Heroina": "0.19",  
-    "Benzoylecgonine": "0.06",  
-    "Cocaethylene": "0.05",  
-    "Norcocaina": "0.05"  
+   &nbsp;&nbsp; "codigo_amostra": "225263",  
+   &nbsp;&nbsp; "Cocaina": "0.5",  
+   &nbsp;&nbsp; "Anfetamina": "0.19",  
+   &nbsp;&nbsp; "Metanfetamina": "0.19",  
+   &nbsp;&nbsp; "MDA": "0.29",  
+   &nbsp;&nbsp; "MDMA": "0.19",  
+   &nbsp;&nbsp; "THC": "0.049",  
+   &nbsp;&nbsp; "Morfina": "0.19",  
+   &nbsp;&nbsp; "Codeina": "0.19",  
+   &nbsp;&nbsp; "Heroina": "0.19",  
+   &nbsp;&nbsp; "Benzoilecgonina": "0.06",  
+   &nbsp;&nbsp; "Cocaetileno": "0.05",  
+   &nbsp;&nbsp; "Norcocaina": "0.05"  
 }  
 
