@@ -30,21 +30,21 @@ DELETE - **http://localhost:3000/toxicologicals/codigo_amostra** -> to remove a 
 POST - **http://localhost:3000/toxicologicals** -> to save a new record.  
 PUT - **http://localhost:3000/toxicologicals/codigo_amostra** -> to change a record.  
 
-For these requests it is necessary to send one in the following format:
+For these requests it is necessary to send one in the following format:    
 `
-{
-   "codigo_amostra": "225263",
-    "Cocaine": "0.5",
-    "Amphetamine": "0.19",
-    "Methamphetamine": "0.19",
-    "MDA": "0.29",
-    "MDMA": "0.19",
-    "THC": "0.049",
-    "Morphine": "0.19",
-    "Codeina": "0.19",
-    "Heroina": "0.19",
-    "Benzoylecgonine": "0.06",
-    "Cocaethylene": "0.05",
-    "Norcocaina": "0.05"
-}
+{  
+   "codigo_amostra": "225263",  
+    "Cocaine": "0.5",  
+    "Amphetamine": "0.19",  
+    "Methamphetamine": "0.19",  
+    "MDA": "0.29",  
+    "MDMA": "0.19",  
+    "THC": "0.049",  
+    "Morphine": "0.19",  
+    "Codeina": "0.19",  
+    "Heroina": "0.19",  
+    "Benzoylecgonine": "0.06",  
+    "Cocaethylene": "0.05",  
+    "Norcocaina": "0.05"  
+}  
 `
