@@ -14,8 +14,8 @@ To start the execution, type the command npm start.
 
 To access the services you will need to use Postman or Insomnia, I use one of these softwares to configure the following routes:
 
-POST - **http://localhost:3000/auth/register** -> to register a user
-POST - **http://localhost:3000/auht/register** -> to log in to the system
+POST - **http://localhost:3000/auth/register** -> to register a user  
+POST - **http://localhost:3000/auht/register** -> to log in to the system  
 
 Fields for the registration route: name, email and password.
 Fields for the login route: email and password.
@@ -24,11 +24,11 @@ After gaining access to the system, it is already possible to access the other r
 
 To access the services that perform the CRUD of the information about the samples, create the following routes:
 
-GET - **http://localhost:3000/toxicologicals** -> to view all samples.
-GET - **http://localhost:3000/toxicologicals/codigo_amostra** -> to view a sample.
-DELETE - **http://localhost:3000/toxicologicals/codigo_amostra** -> to remove a record.
-POST - **http://localhost:3000/toxicologicals** -> to save a new record.
-PUT - **http://localhost:3000/toxicologicals/codigo_amostra** -> to change a record.
+GET - **http://localhost:3000/toxicologicals** -> to view all samples.  
+GET - **http://localhost:3000/toxicologicals/codigo_amostra** -> to view a sample.  
+DELETE - **http://localhost:3000/toxicologicals/codigo_amostra** -> to remove a record.  
+POST - **http://localhost:3000/toxicologicals** -> to save a new record.  
+PUT - **http://localhost:3000/toxicologicals/codigo_amostra** -> to change a record.  
 
 For these requests it is necessary to send one in the following format:
 `
