@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../middlewares/auth');
 const fieldsValidation = require('../helpers/toxicologicsFieldsValidation');
+const ERROR = require('../../config/errors');
 
 router.use(authMiddleware)
 
@@ -10,24 +11,30 @@ const Toxicologic = require('../models/toxicologic');
 router.get('/', async (req, res) => {
 
     try {
-        const toxicologics = await Toxicologic.find();
-        const cleanResponse = fieldsValidation.cleanResponse(toxicologics);
-        return res.status(200).json(cleanResponse);
+        let toxicologics = await Toxicologic.find();
+        toxicologics = fieldsValidation.cleanResponseSome(toxicologics);
+        return res.status(200).json(toxicologics);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ error: 'Error loading toxicologics' });
+        return res.status(500).json(ERROR.ERROR_LOADING_TOXIC);
     }
 
 });
 
-router.get('/:toxicologicId', async (req, res) => {
+router.get('/:codigo_amostra', async (req, res) => {
 
     try {
-        const toxicologic = await Toxicologic.findOne({ CodigoAmostra: req.params.toxicologicId });        
+        let toxicologic = await Toxicologic.findOne({ CodigoAmostra: req.params.codigo_amostra });
+        
+        if (!toxicologic) {
+            return res.status(400).json(ERROR.NOT_FOUND);
+        }
+
+        toxicologic = fieldsValidation.cleanResponseOnlyOne(toxicologic);
         return res.status(200).json(toxicologic);
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ error: 'Error loading toxicologic' });
+        return res.status(500).json(ERROR.ERROR_LOADING_TOXIC);
     }
 
 });
@@ -38,7 +45,7 @@ router.post('/', async (req, res) => {
         const minNumberOfKeys = 1;
         
         if (Object.keys(req.body).length < minNumberOfKeys) {
-            return res.status(400).json({ error: 'All parameters are needed' });
+            return res.status(400).json(ERROR.ERROR_ALL_PARAMETERS);
         }
 
         const thereAreMandatoryFields = fieldsValidation.mandatoryFieldsValidate(req.body);
@@ -59,7 +66,7 @@ router.post('/', async (req, res) => {
         const paramsReadyToInsert = fieldsValidation.prepareFiledsToInsert(req.body);
         
         if (await Toxicologic.findOne({ CodigoAmostra: paramsReadyToInsert.CodigoAmostra })){
-            return res.status(400).json({error: 'This sample already existts'});
+            return res.status(400).json(ERROR.ERROR_SAMPLE_ALREADY_EXISTS);
         }
 
         await Toxicologic.create(paramsReadyToInsert);
@@ -72,19 +79,19 @@ router.post('/', async (req, res) => {
 
     } catch (err) {
         console.error(err)
-        return res.status(500).json({ error: 'Error saving new sample' });
+        return res.status(500).json(ERROR.ERROR_SAVING_SAMPLE);
     }
 
 });
 
-router.put('/:toxicologicId', async (req, res) => {
+router.put('/:codigo_amostra', async (req, res) => {
 
     try {
 
         const minNumberOfKeys = 1;
         
         if (Object.keys(req.body).length < minNumberOfKeys) {
-            return res.status(400).json({ error: 'All parameters are needed' });
+            return res.status(400).json(ERROR.ERROR_ALL_PARAMETERS);
         }
 
         const thereAreMandatoryFields = fieldsValidation.mandatoryFieldsValidate(req.body);
@@ -104,11 +111,14 @@ router.put('/:toxicologicId', async (req, res) => {
         req.body.Result = getParamsResult.sample_result;
         const paramsReadyToInsert = fieldsValidation.prepareFiledsToInsert(req.body);
         
-        const updatedSample = await Toxicologic.findOne({ CodigoAmostra: req.params.toxicologicId });
+        const updatedSample = await Toxicologic.findOne({ CodigoAmostra: req.params.codigo_amostra });
+
+        if (!updatedSample) {
+            return res.status(400).json(ERROR.NOT_FOUND);
+        }
+
         updatedSample.overwrite(paramsReadyToInsert);
         await updatedSample.save();
-
-        console.log(updatedSample)
 
         return res.status(200).json({
             codigo_amostra: getParamsResult.sample_code,
@@ -116,29 +126,32 @@ router.put('/:toxicologicId', async (req, res) => {
          });
     } catch (err) {
         console.error(err)
-        return res.status(500).json({ error: 'Error updating sample'});
+        return res.status(500).json(ERROR.ERROR_UPDATE_SAMPLE);
     }
 
 });
 
-router.delete('/:toxicologicId', async (req, res) => {
+router.delete('/:codigo_amostra', async (req, res) => {
 
     try {
         
-        if (!req.params.toxicologicId || req.params.toxicologicId == undefined) {
-            return res.status(400).json({ error: 'Codigo_amostra invalid' });
+        if (!req.params.codigo_amostra || req.params.codigo_amostra == undefined) {
+            return res.status(400).json(ERROR.ERROR_INVALID_SAMPLE_CODE);
         }
 
-        const removedSample = await Toxicologic.findByIdAndRemove(req.params.toxicologicId);
+
+
+        const removedSample = await Toxicologic.deleteOne({ CodigoAmostra: req.params.codigo_amostra });
         
-        if (removedSample) {
-            return res.status(200).json({codigo_amostra: req.params.toxicologicId, status: 'removed'});
+        if (removedSample.n > 0) {
+            return res.status(200).json({codigo_amostra: req.params.codigo_amostra, status: 'removed'});
         } else {
-            return res.status(400).json({status: 'Not found'});
+            return res.status(400).json(ERROR.NOT_FOUND);
         }
         
     } catch (err) {
-        return res.status(500).json({ error: 'Error deleting project' });
+        console.error(err);
+        return res.status(500).json(ERROR.ERROR_DELETING_SAMPLE);
     }
 
 });

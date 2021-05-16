@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth.json');
 const fieldsValidation = require('../helpers/userFieldsValidation');
-const STRINGS = require('../../config/strings');
+const ERROR = require('../../config/errors');
 
 
 function generateToken(params = {}) {
@@ -22,37 +22,37 @@ router.post('/register', async (req, res) => {
 
     //name validation
     if (isNameValid.isEmpty) {
-        return res.status(400).json(STRINGS.NAME_EMPTY);
+        return res.status(400).json(ERROR.NAME_EMPTY);
     }
 
     if (isNameValid.isInvalidLength) {
-        return res.status(400).json(STRINGS.NAME_TO_SHORT);
+        return res.status(400).json(ERROR.NAME_TO_SHORT);
     }
 
     if (isNameValid.isIncorrect) {
-        return res.status(400).json(STRINGS.NAME_FORMAT);
+        return res.status(400).json(ERROR.NAME_FORMAT);
     }
 
     // email validation
     if (isEmailValid.isEmpty) {
-        return res.status(400).json(STRINGS.EMAIL_EMPTY);
+        return res.status(400).json(ERROR.EMAIL_EMPTY);
     }
     
     if (isEmailValid.isIncorrect) {
-        return res.status(400).json(STRINGS.EMAIL_FORMAT);
+        return res.status(400).json(ERROR.EMAIL_FORMAT);
     }
 
     // password validation
     if (isPasswordValid.isEmpty) {
-        return res.status(400).json(STRINGS.PASSWORD_EMPTY);
+        return res.status(400).json(ERROR.PASSWORD_EMPTY);
     }
 
     if (isPasswordValid.isInvalidLength) {
-        return res.status(400).json(STRINGS.PASSWORD_TO_SHORT);
+        return res.status(400).json(ERROR.PASSWORD_TO_SHORT);
     }
 
     if (isPasswordValid.isIncorrect) {
-        return res.status(400).json(STRINGS.PASSWORD_SPECIAL_CHARS);
+        return res.status(400).json(ERROR.PASSWORD_SPECIAL_CHARS);
     }    
 
     // try to save new user
@@ -80,7 +80,7 @@ router.post('/register', async (req, res) => {
         res.status(200).json(userData);
         
     } catch (err) {
-        return res.status(400).json({ error: 'Registration failed' });
+        return res.status(400).json(ERROR.ERROR_REGISTRATION);
    }
 });
 
@@ -93,34 +93,34 @@ router.post('/login', async (req, res) => {
     
     // email validation
     if (isEmailValid.isEmpty) {
-        return res.status(400).json(STRINGS.EMAIL_EMPTY);
+        return res.status(400).json(ERROR.EMAIL_EMPTY);
     }
     
     if (isEmailValid.isIncorrect) {
-        return res.status(400).json(STRINGS.EMAIL_FORMAT);
+        return res.status(400).json(ERROR.EMAIL_FORMAT);
     }
 
     // password validation
     if (isPasswordValid.isEmpty) {
-        return res.status(400).json(STRINGS.PASSWORD_EMPTY);
+        return res.status(400).json(ERROR.PASSWORD_EMPTY);
     }
 
     if (isPasswordValid.isInvalidLength) {
-        return res.status(400).json(STRINGS.PASSWORD_TO_SHORT);
+        return res.status(400).json(ERROR.PASSWORD_TO_SHORT);
     }
 
     if (isPasswordValid.isIncorrect) {
-        return res.status(400).json(STRINGS.PASSWORD_SPECIAL_CHARS);
+        return res.status(400).json(ERROR.PASSWORD_SPECIAL_CHARS);
     }
     
     const user = await User.findOne({ email }).select('+password');
 
     if (!user) {
-        return res.status(400).json(STRINGS.USER_NOT_FOUND);
+        return res.status(400).json(ERROR.USER_NOT_FOUND);
     }
 
     if (!await bcrypt.compare(password, user.password)) {
-        return res.status(400).json(STRINGS.USER_INVALID_PASSWORD);
+        return res.status(400).json(ERROR.USER_INVALID_PASSWORD);
     }
 
     const token = generateToken({ id: user.id, userName: user.name });
