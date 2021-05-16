@@ -4,7 +4,7 @@ const User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth.json');
-const fieldsValidation = require('../helpers/fieldsValidation');
+const fieldsValidation = require('../helpers/userFieldsValidation');
 const STRINGS = require('../../config/strings');
 
 
